@@ -1,0 +1,54 @@
+/* 
+    Document   : main
+    Created on : 20/08/2013, 02:22:40 PM
+    Author     : johel
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body{
+}
+
+.header-login{
+    padding-top:0px;
+}
+
+header{
+    padding-top:35px;
+    background: repeat-x scroll left bottom #1E2D51;
+    min-height: 48px;
+}
+
+header .titulo{
+    color:#ffffff;
+    line-height: 55px;
+    font-size:16px;
+    font-weight: bold;
+}
+
+/*custom font*/
+
+.top{
+    border-bottom:1px solid #D3D3D3;
+    height:42px;
+    padding:6px;
+    font-size:18px;
+    overflow:hidden;
+}
+
+.contenido{
+    margin:5px;
+}
+
+.nav-stacked-seguridad li a{
+    padding: 4px 10px;
+    border-radius: 3px;
+}
+
+.font-size-xs{
+    font-size:10px;
+}
+
+.pagination{
+    margin-top:0px;
+}
