@@ -1,4 +1,3 @@
-$(document).ready(function() {
     $(document).ready(function() {
         $('#paginado_permisos').dataTable({
             "sAjaxSource": $("#paginado").attr("source"),
@@ -13,5 +12,3 @@ $(document).ready(function() {
             ]
         });
     });
-});
-

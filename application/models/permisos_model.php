@@ -77,6 +77,10 @@ class Permisos_model extends CI_Model {
         return Array('aaData' => $f);
     }
 
+    public function lista_permisos() {
+        return 1;
+    }
+
     function obtener_modulo_por_id($id) {
         $qry = "select * from modulos where id=$id and status='activo'";
         $rst = $this->db->query($qry);

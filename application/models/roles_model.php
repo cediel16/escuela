@@ -1,6 +1,6 @@
 <?php
 
-class Modulos_model extends CI_Model {
+class Roles_model extends CI_Model {
 
     function __construct() {
         parent::__construct();
@@ -56,22 +56,8 @@ class Modulos_model extends CI_Model {
         return TRUE;
     }
 
-    function data_paginado($pagina, $por_pagina) {
-
-        $this->db->trans_start();
-        $qry = "select * from modulos order by modulo";
-        $rst = $this->db->query($qry);
-        if ($this->db->trans_status() === FALSE) {
-            $this->db->trans_rollback();
-            return FALSE;
-        }
-        $this->db->trans_commit();
-
-        return $rst->result_array();
-    }
-
     function paginado() {
-        $qry = "select * from modulos where status='activo' order by modulo";
+        $qry = "select * from roles order by rol";
         $rst = $this->db->query($qry);
         $f = Array();
         if ($rst->num_rows() > 0) {
@@ -79,15 +65,13 @@ class Modulos_model extends CI_Model {
                 $gear = '<div class = "btn-group">';
                 $gear.= '<span class = "btn btn-xs icon icon-gears dropdown-toggle" data-toggle = "dropdown"></span>';
                 $gear.= '<ul class = "dropdown-menu pull-right" role = "menu">';
-                $gear.= '<li>' . anchor('modulos/edit/' . $row->id, 'Editar') . '</li>';
-                $gear.= '<li class = "divider"></li>';
-                $gear.= '<li>' . anchor('modulos/del/' . $row->id, 'Eliminar') . '</li>';
+                $gear.= '<li>' . anchor('roles/edit/' . $row->id, 'Editar rol') . '</li>';
+                $gear.= '<li class="divider"></li>';
+                $gear.= '<li>' . anchor('permisos/edit/' . $row->id, 'Editar permisos') . '</li>';
                 $gear.= '</ul>';
                 $gear.= '</div>';
                 $f[] = array(
-                    $row->modulo,
-                    $row->alias,
-                    $row->descripcion,
+                    $row->rol,
                     $gear
                 );
             }
@@ -104,8 +88,8 @@ class Modulos_model extends CI_Model {
         return NULL;
     }
 
-    function lista_modulos() {
-        $qry = "select * from modulos where status='activo' order by modulo";
+    function lista_roles() {
+        $qry = "select * from roles where status='activo' order by rol";
         $rst = $this->db->query($qry);
         if ($rst->num_rows() > 0) {
             return $rst->result();

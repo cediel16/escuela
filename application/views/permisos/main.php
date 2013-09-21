@@ -1,3 +1,6 @@
+<?php
+$total_roles = count($lista_roles);
+?>
 <?php echo link_tag('assets/lib/datatables/css/jquery.datatables.bootstrap.css') ?>
 <div class="top">
     <div class="container">
@@ -34,24 +37,45 @@
                     <li class="active pull-right"><a href="#permisos" data-toggle="tab">Permisos</a></li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="permisos">
-                        <table id="paginado_permisos" class="table table-condensed table-bordered" source="<?php echo site_url() ?>/permisos/paginado">
+                    <div class="tab-pane active" id="permisos" style="overflow-x: auto;">
+                        <table id="lista_permisos" class="table table-condensed table-bordered" source="<?php echo site_url() ?>/permisos/paginado_roles">
                             <thead>
                                 <tr>
-                                    <th>id</th>
-                                    <th></th>
+                                    <th>Permiso</th>
+                                    <?php foreach ($lista_roles as $r) { ?>
+                                        <th style="text-align:center;"><?php echo $r->rol ?></th>
+                                    <?php } ?>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <?php foreach ($lista_modulos as $m) { ?>
+                                    <tr>
+                                        <th colspan="<?php echo ($total_roles + 1) ?>"><?php echo $m->modulo ?></th>
+                                    </tr>
+                                    <?php for ($j = 1; $j <= 2; $j++) { ?>
+                                        <tr>
+                                            <td>Permiso <?php echo $j ?></td>
+                                            <?php for ($k = 1; $k <= $total_roles; $k++) { ?>
+                                                <td align="center"><input type="checkbox" /></td>
+                                            <?php } ?>
+                                        </tr>
+
+                                    <?php } ?>
+                                <?php } ?>
+                            </tbody>
                         </table>
                     </div>
                     <div class="tab-pane" id="roles">
-                        <table id="paginado_roles" class="table table-condensed table-bordered" source="<?php echo site_url() ?>/permisos/paginado">
+                        <table id="paginado_roles" class="table table-condensed table-bordered" source="<?php echo site_url() ?>/permisos/paginado_roles">
                             <thead>
                                 <tr>
-                                    <th>id</th>
+                                    <th>Rol</th>
                                     <th></th>
                                 </tr>
                             </thead>
+                            <tbody>
+
+                            </tbody>
                         </table>
 
                     </div>

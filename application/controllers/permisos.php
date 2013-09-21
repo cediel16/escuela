@@ -31,13 +31,19 @@ class Permisos extends CI_Controller {
     }
 
     public function index() {
+        $this->load->model('Roles_model');
+        $this->load->model('Modulos_model');
+        $this->load->model('Permisos_model');
         $data['titulo'] = 'Administrador de Permisos';
+        $data['lista_roles'] = $this->Roles_model->lista_roles();
+        $data['lista_modulos'] = $this->Modulos_model->lista_modulos();
+        $data['lista_permisos'] = $this->Permisos_model->lista_permisos();
         $this->tpl->view_basic('permisos/main', $data);
     }
 
-    public function paginado() {
-        $this->load->model('Permisos_model');
-        echo json_encode($this->Permisos_model->paginado());
+    public function paginado_roles() {
+        $this->load->model('Roles_model');
+        echo json_encode($this->Roles_model->paginado());
     }
 
 }

@@ -1,5 +1,3 @@
-$(document).ready(function(){
-    /* Table initialisation */
     $(document).ready(function(){
         $('#paginado').dataTable({
             "sAjaxSource": $("#paginado").attr("source"),
@@ -17,5 +15,3 @@ $(document).ready(function(){
             ]
         });
     });
-});
-
