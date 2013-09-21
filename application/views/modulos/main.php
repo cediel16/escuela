@@ -34,7 +34,6 @@
                         <tr>
                             <th>Módulo</th>
                             <th>Alias</th>
-                            <th>Descripción</th>
                             <th></th>
                         </tr>
                     </thead>

@@ -87,7 +87,6 @@ class Modulos_model extends CI_Model {
                 $f[] = array(
                     $row->modulo,
                     $row->alias,
-                    $row->descripcion,
                     $gear
                 );
             }

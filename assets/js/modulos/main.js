@@ -9,9 +9,6 @@
                 "bSortable": true
             },
             {
-                "bSortable": true
-            },
-            {
                 "bSortable": false,
                 "bSearchable":false
             }

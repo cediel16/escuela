@@ -37,7 +37,6 @@ class Permisos extends CI_Controller {
         $data['titulo'] = 'Administrador de Permisos';
         $data['lista_roles'] = $this->Roles_model->lista_roles();
         $data['lista_modulos'] = $this->Modulos_model->lista_modulos();
-        $data['lista_permisos'] = $this->Permisos_model->lista_permisos();
         $this->tpl->view_basic('permisos/main', $data);
     }
 

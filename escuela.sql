@@ -371,7 +371,6 @@ CREATE TABLE modulos (
     id integer NOT NULL,
     modulo character varying(50) NOT NULL,
     alias character varying(50) NOT NULL,
-    descripcion text NOT NULL,
     status character varying(20) DEFAULT 'activo'::character varying NOT NULL
 );
 
@@ -404,7 +403,11 @@ ALTER SEQUENCE modulos_id_seq OWNED BY modulos.id;
 --
 
 CREATE TABLE permisos (
-    id integer NOT NULL
+    id integer NOT NULL,
+    permiso character varying(50) NOT NULL,
+    status character varying(15) NOT NULL,
+    orden integer DEFAULT 0 NOT NULL,
+    modulo_fkey integer NOT NULL
 );
 
 
@@ -737,12 +740,11 @@ COPY aud_operaciones (id, usuario_fkey, aud_modulo_fkey, aud_accion_fkey, operac
 98	1	5	3	Inicio de sesión	1379289614
 99	1	5	5	Cierre de sesión	1379291915
 100	1	5	3	Inicio de sesión	1379292092
-101	1	5	3	Inicio de sesión	1379614283
-102	1	5	3	Inicio de sesión	1379614360
-103	1	5	5	Cierre de sesión	1379614635
-104	1	5	3	Inicio de sesión	1379615194
-105	1	5	5	Cierre de sesión	1379615299
-106	1	5	3	Inicio de sesión	1379615312
+101	1	5	3	Inicio de sesión	1379763368
+102	1	6	6	{modulo:Usuarios,alias:usuarios,descripcion:Administrador de usuarios}	1379763990
+103	1	6	6	{modulo:Grupos,alias:grupos,descripcion:Administrador de Grupos}	1379764025
+104	1	6	6	{modulo:Permisos,alias:permisos,descripcion:Administrador de permisos y roles}	1379764047
+105	1	6	6	{modulo:Módulos,alias:modulos,descripcion:Administrador de módulos}	1379764068
 \.
 
 
@@ -750,7 +752,7 @@ COPY aud_operaciones (id, usuario_fkey, aud_modulo_fkey, aud_accion_fkey, operac
 -- Name: aud_operaciones_id_seq; Type: SEQUENCE SET; Schema: public; Owner: johel
 --
 
-SELECT pg_catalog.setval('aud_operaciones_id_seq', 106, true);
+SELECT pg_catalog.setval('aud_operaciones_id_seq', 105, true);
 
 
 --
@@ -758,7 +760,7 @@ SELECT pg_catalog.setval('aud_operaciones_id_seq', 106, true);
 --
 
 COPY ci_sessions (session_id, ip_address, user_agent, last_activity, user_data) FROM stdin;
-f3bde1b6791443c9aca13ebac3671229	::1	Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Firefox/24.0	1379627138	
+2ce2496ab4191252b5d213edd2a1cc3b	::1	Mozilla/5.0 (X11; Linux i686; rv:23.0) Gecko/20100101 Firefox/23.0	1379786253	
 \.
 
 
@@ -802,29 +804,11 @@ SELECT pg_catalog.setval('grupos_id_seq', 5, true);
 -- Data for Name: modulos; Type: TABLE DATA; Schema: public; Owner: johel
 --
 
-COPY modulos (id, modulo, alias, descripcion, status) FROM stdin;
-1	dada	usuarios	asdasda	activo
-9	xxx	xxx	xxx	activo
-16	xxxx	xxxx	xxx	activo
-17	ddad	asdasda	sdasd	activo
-18	asda sdasd asd	as dasd	sdasda sdasd 	activo
-19	asd	asda	sadasd	activo
-20	4444	44444	44444	activo
-21	sadasd	44444asdasda	44444	activo
-22	sadasdere	44444asdasdarr	44444	activo
-23	sadasderewerwr	44444asdasdarrwerw	44444werwer	activo
-24	sadasderewerwrasdasd	44444asdasdarrwerwadasd	44444werwerasd	activo
-25	sadasderewerwrasdasddd	44444asdasdarrwerwadasdddd	44444werwerasddd	activo
-27	2223333	223333	22223333	activo
-28	a	a	a	activo
-29	Representantes	representantes	Modulo para la gestión de representantes	activo
-30	Aulas	aulas	Gestor de aulas	activo
-31	sssssss	ssssssssss	sadasd	activo
-32	pepe	pepe	pepe	activo
-33	Docentes	docentes	Gestor de docentes	activo
-34	Modulos	modulos	Gestor de modulos	activo
-26	Prueba	22	2222	activo
-35	Auditoria	auditoria	Gestor de auditoria	activo
+COPY modulos (id, modulo, alias, status) FROM stdin;
+1	Usuarios	usuarios	activo
+2	Grupos	grupos	activo
+3	Permisos	permisos	activo
+4	Módulos	modulos	activo
 \.
 
 
@@ -832,15 +816,24 @@ COPY modulos (id, modulo, alias, descripcion, status) FROM stdin;
 -- Name: modulos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: johel
 --
 
-SELECT pg_catalog.setval('modulos_id_seq', 39, true);
+SELECT pg_catalog.setval('modulos_id_seq', 4, true);
 
 
 --
 -- Data for Name: permisos; Type: TABLE DATA; Schema: public; Owner: johel
 --
 
-COPY permisos (id) FROM stdin;
-1
+COPY permisos (id, permiso, status, orden, modulo_fkey) FROM stdin;
+15	Ver lista de usuarios	activo	1	1
+16	Añadir usuario	activo	2	1
+17	Editar usuario	activo	3	1
+18	Ver lista de permisos	activo	4	3
+19	Asignar permisos	activo	5	3
+20	Ver lista de roles	activo	6	3
+21	Añadir rol	activo	7	3
+22	Editar rol	activo	8	3
+23	Ver lista de módulos	activo	1	4
+24	Ver lista de grupos	activo	1	2
 \.
 
 
@@ -848,7 +841,7 @@ COPY permisos (id) FROM stdin;
 -- Name: permisos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: johel
 --
 
-SELECT pg_catalog.setval('permisos_id_seq', 1, true);
+SELECT pg_catalog.setval('permisos_id_seq', 24, true);
 
 
 --
@@ -1039,6 +1032,14 @@ ALTER TABLE ONLY modulos
 
 
 --
+-- Name: permisos_permiso_key; Type: CONSTRAINT; Schema: public; Owner: johel; Tablespace: 
+--
+
+ALTER TABLE ONLY permisos
+    ADD CONSTRAINT permisos_permiso_key UNIQUE (permiso);
+
+
+--
 -- Name: permisos_pkey; Type: CONSTRAINT; Schema: public; Owner: johel; Tablespace: 
 --
 
@@ -1145,6 +1146,14 @@ ALTER TABLE ONLY aud_operaciones
 
 ALTER TABLE ONLY aud_operaciones
     ADD CONSTRAINT aud_operaciones_usuario_fkey_fkey FOREIGN KEY (usuario_fkey) REFERENCES usuarios(id);
+
+
+--
+-- Name: permisos_modulo_fkey_fkey; Type: FK CONSTRAINT; Schema: public; Owner: johel
+--
+
+ALTER TABLE ONLY permisos
+    ADD CONSTRAINT permisos_modulo_fkey_fkey FOREIGN KEY (modulo_fkey) REFERENCES modulos(id);
 
 
 --
