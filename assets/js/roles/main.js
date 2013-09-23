@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $('#paginado_roles').dataTable({
-        "sAjaxSource": $("#paginado_roles").attr("source"),
+    $('#paginado').dataTable({
+        "sAjaxSource": $("#paginado").attr("source"),
         "aoColumns": [
             {
                 "bSortable": true

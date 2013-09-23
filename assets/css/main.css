@@ -52,3 +52,12 @@ header .titulo{
 .pagination{
     margin-top:0px;
 }
+
+.paginado td:last-child{
+    text-align: center;
+    width:1%;
+}
+
+.paginado td:last-child .btn-group li{
+    text-align: left;
+}

@@ -24,9 +24,10 @@
             <div class="col-md-2">
                 <ul class="nav nav-pills nav-stacked nav-stacked-seguridad">
                     <li class="active"><?php echo anchor('users', 'Usuarios') ?></li>
-                    <li><?php echo anchor('grupos', 'Grupos') ?></li>
+                    <li><?php echo anchor('roles', 'Roles') ?></li>
                     <li><?php echo anchor('permisos', 'Permisos') ?></li>
                     <li><?php echo anchor('modulos', 'Módulos') ?></li>
+                    <li><?php echo anchor('grupos', 'Grupos') ?></li>
                 </ul>
                 <hr>
                 <h4>Filtro <span class="text-muted" style="font-size:10px;">(Próximanente)</span></h4>

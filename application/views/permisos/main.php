@@ -26,66 +26,45 @@ $total_roles = count($lista_roles);
             <div class="col-md-2">
                 <ul class="nav nav-pills nav-stacked nav-stacked-seguridad">
                     <li><?php echo anchor('users', 'Usuarios') ?></li>
-                    <li><?php echo anchor('grupos', 'Grupos') ?></li>
+                    <li><?php echo anchor('roles', 'Roles') ?></li>
                     <li class="active"><?php echo anchor('permisos', 'Permisos') ?></li>
                     <li><?php echo anchor('modulos', 'Módulos') ?></li>
+                    <li><?php echo anchor('grupos', 'Grupos') ?></li>
                 </ul>
             </div>
             <div class="col-md-10">
-                <ul class="nav nav-tabs" style="margin-bottom:6px;">
-                    <li class="pull-right"><a href="#roles" data-toggle="tab">Roles</a></li>
-                    <li class="active pull-right"><a href="#permisos" data-toggle="tab">Permisos</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="permisos" style="overflow-x: auto;">
-                        <table id="lista_permisos" class="table table-condensed table-bordered" source="<?php echo site_url() ?>/permisos/paginado_roles">
-                            <thead>
-                                <tr >
-                                    <th>Permiso</th>
-                                    <?php foreach ($lista_roles as $r) { ?>
-                                        <td style="text-align:center;"><?php echo $r->rol ?></td>
-                                    <?php } ?>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($lista_modulos as $m) { ?>
-                                    <tr class="success">
-                                        <th colspan="<?php echo ($total_roles + 1) ?>"><?php echo $m->modulo ?></th>
-                                    </tr>
-                                    <?php $lista_permisos = $this->Permisos_model->lista_permisos_por_modulo($m->id) ?>
-                                    <?php if (count($lista_permisos) > 0) { ?>
-                                        <?php foreach ($lista_permisos as $p) { ?>
-                                            <tr>
-                                                <td><?php echo $p->permiso ?></td>
-                                                <?php for ($k = 1; $k <= $total_roles; $k++) { ?>
-                                                    <td align="center"><input type="checkbox" /></td>
-                                                <?php } ?>
-                                            </tr>
+                <table id="lista_permisos" class="table table-condensed table-bordered" source="<?php echo site_url() ?>/permisos/paginado_roles">
+                    <thead>
+                        <tr >
+                            <th>Permiso</th>
+                            <?php foreach ($lista_roles as $r) { ?>
+                                <td style="text-align:center;"><?php echo $r->rol ?></td>
+                            <?php } ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($lista_modulos as $m) { ?>
+                            <tr class="success">
+                                <th colspan="<?php echo ($total_roles + 1) ?>"><?php echo $m->modulo ?></th>
+                            </tr>
+                            <?php $lista_permisos = $this->Permisos_model->lista_permisos_por_modulo($m->id) ?>
+                            <?php if (count($lista_permisos) > 0) { ?>
+                                <?php foreach ($lista_permisos as $p) { ?>
+                                    <tr>
+                                        <td><?php echo $p->permiso ?></td>
+                                        <?php for ($k = 1; $k <= $total_roles; $k++) { ?>
+                                            <td align="center"><input type="checkbox" /></td>
                                         <?php } ?>
-                                    <?php } ?>
+                                    </tr>
                                 <?php } ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane" id="roles">
-                        <table id="paginado_roles" class="table table-condensed table-bordered" source="<?php echo site_url() ?>/permisos/paginado_roles">
-                            <thead>
-                                <tr>
-                                    <th>Rol</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-
+                            <?php } ?>
+                        <?php } ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 </div>
 <script type="text/javascript">
     $('#myTab a').click(function(e) {

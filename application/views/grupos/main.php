@@ -23,13 +23,14 @@
             <div class="col-md-2">
                 <ul class="nav nav-pills nav-stacked nav-stacked-seguridad">
                     <li><?php echo anchor('users', 'Usuarios') ?></li>
-                    <li class="active"><?php echo anchor('grupos', 'Grupos') ?></li>
+                    <li><?php echo anchor('roles', 'Roles') ?></li>
                     <li><?php echo anchor('permisos', 'Permisos') ?></li>
                     <li><?php echo anchor('modulos', 'Módulos') ?></li>
+                    <li class="active"><?php echo anchor('grupos', 'Grupos') ?></li>
                 </ul>
             </div>
             <div class="col-md-10">
-                <table id="paginado" class="table table-condensed table-bordered" source="<?php echo site_url() ?>/grupos/paginado">
+                <table id="paginado" class="paginado table table-condensed table-bordered" source="<?php echo site_url() ?>/grupos/paginado">
                     <thead>
                         <tr>
                             <th>Grupo</th>
