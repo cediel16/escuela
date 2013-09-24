@@ -11,6 +11,7 @@
 
         <div class="collapse navbar-collapse navbar-ex8-collapse">
             <ul class="nav navbar-nav">
+                <li><?php echo anchor('planteles', 'Planteles') ?></li>
                 <li><?php echo anchor('users', 'Usuarios') ?></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
