@@ -27,77 +27,110 @@ class Planteles extends CI_Controller {
 
     public function add() {
         if (!$this->input->post()) {
-            $this->load->model('Users_model');
+            $this->load->model('Estados_model');
+            $this->load->model('Municipios_model');
+            $this->load->model('Parroquias_model');
+
             $data['titulo'] = 'Agregar Nuevo Plantel';
-            $data['opt_grupos'] = $this->Users_model->opt_grupos();
-            $data['opt_roles'] = $this->Users_model->opt_roles();
+            $data['opt_estados'] = $this->Estados_model->opt_estados();
+            $data['opt_municipios'] = $this->Municipios_model->opt_municipios();
+            $data['opt_parroquias'] = $this->Parroquias_model->opt_parroquias();
             $this->tpl->view_basic('planteles/add', $data);
         } else {
             $respuesta = TRUE;
-            $usuario = trim($this->input->post('usuario'));
-            $email = strtolower(trim($this->input->post('email')));
-            $clave = $this->input->post('clave');
-            $conf_clave = $this->input->post('conf_clave');
-            $grupo = $this->input->post('grupo');
-            $rol = $this->input->post('rol');
-            $this->load->model('Users_model');
+            $dea = trim(strtoupper($this->input->post('dea')));
+            $rif = trim(strtoupper($this->input->post('rif')));
+            $nombre_pĺantel = trim(strtoupper($this->input->post('nombre_plantel')));
+            $this->load->model('Planteles_model');
             $mensaje_principal = '';
             $msj = array();
-            if ($usuario == '') {
+
+            if ($dea == '') {
                 $respuesta = FALSE;
-                $msj['usuario'] = 'Este campo es obligatorio';
-            } elseif ($this->Users_model->existe_usuario($usuario)) {
+                $msj['dea'] = 'Este campo es obligatorio';
+            } elseif (!es_dea($dea)) {
                 $respuesta = FALSE;
-                $msj['usuario'] = 'El nombre del usuario ya se encuentra registrado';
+                $msj['dea'] = 'El código DEA es inválido';
+            } elseif ($this->Planteles_model->existe_dea($dea)) {
+                $respuesta = FALSE;
+                $msj['dea'] = 'El código DEA ya se en cuentra registrado';
             }
 
-            if ($email == '') {
+            if ($rif == '') {
                 $respuesta = FALSE;
-                $msj['email'] = 'Este campo es obligatorio';
-            } elseif (!es_email($email)) {
+                $msj['rif'] = 'Este campo es obligatorio';
+            } elseif (!es_rif($rif)) {
                 $respuesta = FALSE;
-                $msj['email'] = 'Correo electrónico inválido';
-            } elseif ($this->Users_model->existe_email($email)) {
-                $respuesta = FALSE;
-                $msj['email'] = 'El correo electrónico ya se encuentra en uso';
+                $msj['rif'] = 'El RIF es inválido' . $rif;
             }
 
-            if ($clave == '' || $conf_clave == '') {
+            if ($nombre_pĺantel == '') {
                 $respuesta = FALSE;
-                $msj['clave'] = 'Ingrese contraseña y su confirmación';
-            } elseif ($clave != $conf_clave) {
+                $msj['nombre_plantel'] = 'Este campo es obligatorio';
+            } elseif (!es_nombre_plantel($rif)) {
                 $respuesta = FALSE;
-                $msj['clave'] = 'La contraseña y su confirmación no coiciden';
-            } elseif ($clave == $conf_clave && strlen($clave) <= 5) {
-                $respuesta = FALSE;
-                $msj['clave'] = 'La contraseña debe tener mas de 5 caracteres';
+                $msj['nombre_plantel'] = 'El RIF es inválido' . $rif;
             }
 
-            if (!is_numeric($grupo)) {
-                $respuesta = FALSE;
-                $msj['grupo'] = 'Este campo es obligatorio';
-            }
+            /*
 
-            if (!is_numeric($rol)) {
-                $respuesta = FALSE;
-                $msj['rol'] = 'Este campo es obligatorio';
-            }
+              if ($email == '') {
+              $respuesta = FALSE;
+              $msj['email'] = 'Este campo es obligatorio';
+              } elseif (!es_email($email)) {
+              $respuesta = FALSE;
+              $msj['email'] = 'Correo electrónico inválido';
+              } elseif ($this->Users_model->existe_email($email)) {
+              $respuesta = FALSE;
+              $msj['email'] = 'El correo electrónico ya se encuentra en uso';
+              }
+
+              if ($clave == '' || $conf_clave == '') {
+              $respuesta = FALSE;
+              $msj['clave'] = 'Ingrese contraseña y su confirmación';
+              } elseif ($clave != $conf_clave) {
+              $respuesta = FALSE;
+              $msj['clave'] = 'La contraseña y su confirmación no coiciden';
+              } elseif ($clave == $conf_clave && strlen($clave) <= 5) {
+              $respuesta = FALSE;
+              $msj['clave'] = 'La contraseña debe tener mas de 5 caracteres';
+              }
+
+              if (!is_numeric($grupo)) {
+              $respuesta = FALSE;
+              $msj['grupo'] = 'Este campo es obligatorio';
+              }
+
+              if (!is_numeric($rol)) {
+              $respuesta = FALSE;
+              $msj['rol'] = 'Este campo es obligatorio';
+              }
+             * 
+             */
 
             if ($respuesta) {
-                if ($this->Users_model->insertar(array(
-                            'usuario' => $usuario,
-                            'email' => $email,
-                            'clave' => md5($clave),
-                            'grupo_fkey' => $grupo,
-                            'rol_fkey' => $rol
-                        ))
-                ) {
-                    $mensaje_principal = '<div class="alert alert-success">El usuario se ha registrado con éxito.</div>';
+                if ($this->Planteles_model->insertar(array())) {
+                    $mensaje_principal = '<div class="alert alert-success">El plantel con el código DEA <strong>' . $dea . '</strong> se ha registrado con éxito.</div>';
                 } else {
                     $respuesta = FALSE;
                 }
             }
             echo json_encode(array('respuesta' => $respuesta, 'msj' => $msj, 'mensaje_principal' => $mensaje_principal));
+        }
+    }
+
+    public function ajax() {
+        switch ($this->input->post('switch')) {
+            case 'opt_municipios':
+                $this->load->model('Municipios_model');
+                echo json_encode($this->Municipios_model->opt_municipios($this->input->post('estado')));
+                break;
+            case 'opt_parroquias':
+                $this->load->model('Parroquias_model');
+                echo json_encode($this->Parroquias_model->opt_parroquias($this->input->post('municipio')));
+                break;
+            default:
+                break;
         }
     }
 

@@ -1,9 +1,18 @@
 <?php
+$dea = array(
+    'type' => 'input',
+    'id' => 'dea',
+    'name' => 'dea',
+    'class' => 'form-control',
+    'maxlength' => 10
+);
+
 $rif = array(
     'type' => 'input',
     'id' => 'rif',
     'name' => 'rif',
-    'class' => 'form-control'
+    'class' => 'form-control',
+    'maxlength' => 10
 );
 
 $nombre_plantel = array(
@@ -23,7 +32,7 @@ $direccion = array(
 $estado = array(
     'id' => 'estado',
     'name' => 'estado',
-    'options' => array(),
+    'options' => $opt_estados,
     'selected' => '',
     'class' => "form-control"
 );
@@ -31,7 +40,7 @@ $estado = array(
 $municipio = array(
     'id' => 'municipio',
     'name' => 'municipio',
-    'options' => array(),
+    'options' => $opt_municipios,
     'selected' => '',
     'class' => "form-control"
 );
@@ -39,7 +48,7 @@ $municipio = array(
 $parroquia = array(
     'id' => 'parroquia',
     'name' => 'parroquia',
-    'options' => array(),
+    'options' => $opt_parroquias,
     'selected' => '',
     'class' => "form-control"
 );
@@ -115,21 +124,30 @@ $btnGuardarPlantel = array(
         <div class="row">
             <div class="col-md-12" id="mensaje-principal"></div>
         </div>
+        <?php echo form_open('', array('id' => 'frmPlantel', 'role' => 'form')) ?>
         <div class="row">
             <div class="col-md-9">
                 <legend>Datos del Plantel</legend>
-                <?php echo form_open('', array('id' => 'frmUsuario', 'role' => 'form')) ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group" id="form-group-dea">
+                            <label for="<?php echo $dea['id'] ?>" class="control-label">Código DEA</label>
+                            <?php echo form_input($dea) ?>
+                            <div id="form-msj-dea"></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group" id="form-group-rif">
-                            <label for="<?php echo $rif['id'] ?>">RIF</label>
+                            <label for="<?php echo $rif['id'] ?>" class="control-label">RIF</label>
                             <?php echo form_input($rif) ?>
                             <div id="form-msj-rif"></div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group" id="form-group-nombre-plantel">
-                            <label for="<?php echo $nombre_plantel['id'] ?>">Nombre</label>
+                            <label for="<?php echo $nombre_plantel['id'] ?>" class="control-label">Nombre</label>
                             <?php echo form_input($nombre_plantel) ?>
                             <div id="form-msj-nombre-plantel"></div>
                         </div>
@@ -138,7 +156,7 @@ $btnGuardarPlantel = array(
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group" id="form-group-direccion">
-                            <label for="<?php echo $direccion['id'] ?>">Dirección</label>
+                            <label for="<?php echo $direccion['id'] ?>" class="control-label">Dirección</label>
                             <?php echo form_textarea($direccion) ?>
                             <div id="form-msj-direccion"></div>
                         </div>
@@ -147,22 +165,22 @@ $btnGuardarPlantel = array(
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group" id="form-group-estado">
-                            <label for="<?php echo $estado['id'] ?>">Estado</label>
+                            <label for="<?php echo $estado['id'] ?>" class="control-label">Estado</label>
                             <?php echo form_dropdown($estado['name'], $estado['options'], $estado['selected'], 'id="' . $estado['id'] . '" class="' . $estado['class'] . '"') ?>
                             <div id="form-msj-estado"></div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group" id="form-group-municipio">
-                            <label for="<?php echo $municipio['id'] ?>">Municipio</label>
+                            <label for="<?php echo $municipio['id'] ?>" class="control-label">Municipio</label>
                             <?php echo form_dropdown($municipio['name'], $municipio['options'], $municipio['selected'], 'id="' . $municipio['id'] . '" class="' . $municipio['class'] . '"') ?>
                             <div id="form-msj-municipio"></div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group" id="form-group-parroquia">
-                            <label for="<?php echo $parroquia['id'] ?>">Parroquia</label>
-                            <?php echo form_dropdown($parroquia['name'], $parroquia['options'], $parroquia['selected'], 'id="' . $municipio['id'] . '" class="' . $parroquia['class'] . '"') ?>
+                            <label for="<?php echo $parroquia['id'] ?>" class="control-label">Parroquia</label>
+                            <?php echo form_dropdown($parroquia['name'], $parroquia['options'], $parroquia['selected'], 'id="' . $parroquia['id'] . '" class="' . $parroquia['class'] . '"') ?>
                             <div id="form-msj-parroquia"></div>
                         </div>
                     </div>
@@ -170,42 +188,41 @@ $btnGuardarPlantel = array(
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group" id="form-group-telefono-plantel">
-                            <label for="<?php echo $telefono_plantel['id'] ?>">Teléfono</label>
+                            <label for="<?php echo $telefono_plantel['id'] ?>" class="control-label">Teléfono</label>
                             <?php echo form_input($telefono_plantel) ?>
                             <div id="form-msj-telefono-plantel"></div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group" id="form-group-email-plantel">
-                            <label for="<?php echo $email_plantel['id'] ?>">Correo electrónico</label>
+                            <label for="<?php echo $email_plantel['id'] ?>" class="control-label">Correo electrónico</label>
                             <?php echo form_input($email_plantel) ?>
                             <div id="form-msj-email-plantel"></div>
                         </div>
                     </div>
                 </div>
-                <?php echo form_close() ?>
             </div>
             <div class="col-md-3">
                 <legend>Datos del Director</legend>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group" id="form-group-cedula-director">
-                            <label for="<?php echo $cedula_director['id'] ?>">Cédula</label>
+                            <label for="<?php echo $cedula_director['id'] ?>" class="control-label">Cédula</label>
                             <?php echo form_input($cedula_director) ?>
                             <div id="form-msj-cedula-director"></div>
                         </div>
                         <div class="form-group" id="form-group-nombre-director">
-                            <label for="<?php echo $nombre_director['id'] ?>">Teléfono</label>
+                            <label for="<?php echo $nombre_director['id'] ?>" class="control-label">Nombre</label>
                             <?php echo form_input($nombre_director) ?>
                             <div id="form-msj-nombre-director"></div>
                         </div>
                         <div class="form-group" id="form-group-telefono-director">
-                            <label for="<?php echo $telefono_director['id'] ?>">Teléfono</label>
+                            <label for="<?php echo $telefono_director['id'] ?>" class="control-label">Teléfono</label>
                             <?php echo form_input($telefono_director) ?>
                             <div id="form-msj-telefono-director"></div>
                         </div>
                         <div class="form-group" id="form-group-email-director">
-                            <label for="<?php echo $email_director['id'] ?>">Correo electrónico</label>
+                            <label for="<?php echo $email_director['id'] ?>" class="control-label">Correo electrónico</label>
                             <?php echo form_input($email_director) ?>
                             <div id="form-msj-email-director"></div>
                         </div>
@@ -213,6 +230,7 @@ $btnGuardarPlantel = array(
                 </div>
             </div>
         </div>
+        <?php echo form_close() ?>
     </div>
 </div>
-<?php echo script_tag('assets/js/users/add.js') ?>
+<?php echo script_tag('assets/js/planteles/add.js') ?>
