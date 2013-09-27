@@ -11,7 +11,14 @@ if (!function_exists('is_cedula')) {
     }
 
     function es_nombre_plantel($arg) {
-        $patron = '/^([a-z ñáéíóú])$/i';
+        return 1;
+        $patron = '/^[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*$/';
+        return preg_match($patron, $arg) == 1;
+    }
+
+    function es_direccion($arg) {
+        return 1;
+        $patron = '/^[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*$/';
         return preg_match($patron, $arg) == 1;
     }
 
@@ -27,6 +34,11 @@ if (!function_exists('is_cedula')) {
 
     function es_rif($arg) {
         $patron = '/^(J|E)\d{9,9}$/';
+        return preg_match($patron, $arg) == 1;
+    }
+
+    function es_telefono($arg) {
+        $patron = '/^0(4{1}(1{1}(2{1}|4{1}|6{1})|2{1}(4{1}|6{1}))|2{1}\d{2})-(\d{7})$/';
         return preg_match($patron, $arg) == 1;
     }
 

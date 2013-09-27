@@ -64,7 +64,39 @@ $(document).ready(function() {
                     $("#form-group-rif").removeClass('has-error');
                     $("#form-msj-rif").html('');
                     $("#rif").val('');
-//
+
+                    $("#form-group-nombre-plantel").removeClass('has-error');
+                    $("#form-msj-nombre-plantel").html('');
+                    $("#nombre_plantel").val('');
+
+                    $("#form-group-direccion").removeClass('has-error');
+                    $("#form-msj-direccion").html('');
+                    $("#direccion").val('');
+
+                    $("#form-group-estado").removeClass('has-error');
+                    $("#form-msj-estado").html('');
+                    $("#estado").val('');
+
+                    $("#form-group-municipio").removeClass('has-error');
+                    $("#form-msj-municipio").html('');
+                    $("#municipio").val('');
+
+                    $("#form-group-parroquia").removeClass('has-error');
+                    $("#form-msj-parroquia").html('');
+                    $("#parroquia").val('');
+
+                    $("#form-group-telefono-plantel").removeClass('has-error');
+                    $("#form-msj-telefono-plantel").html('');
+                    $("#telefono_plantel").val('');
+
+                    $("#form-group-email-plantel").removeClass('has-error');
+                    $("#form-msj-email-plantel").html('');
+                    $("#email_plantel").val('');
+
+
+
+                    //
+
 //                    $("#form-group-email").removeClass('has-error');
 //                    $("#form-msj-email").html('');
 //                    $("#email").val('');
@@ -101,11 +133,59 @@ $(document).ready(function() {
                     }
                     if (typeof rst.msj.nombre_plantel !== 'undefined') {
                         $("#form-group-nombre-plantel").addClass('has-error');
-                        $("#form-msj-nombre-plantel").html('<span class="text-danger">' + rst.msj.rif + '</span>');
+                        $("#form-msj-nombre-plantel").html('<span class="text-danger">' + rst.msj.nombre_plantel + '</span>');
                     } else {
                         $("#form-group-nombre-plantel").removeClass('has-error');
                         $("#form-msj-nombre-plantel").html('');
-                    }                }
+                    }
+                    if (typeof rst.msj.direccion !== 'undefined') {
+                        $("#form-group-direccion").addClass('has-error');
+                        $("#form-msj-direccion").html('<span class="text-danger">' + rst.msj.direccion + '</span>');
+                    } else {
+                        $("#form-group-direccion").removeClass('has-error');
+                        $("#form-msj-direccion").html('');
+                    }
+
+                    if (typeof rst.msj.estado !== 'undefined') {
+                        $("#form-group-estado").addClass('has-error');
+                        $("#form-msj-estado").html('<span class="text-danger">' + rst.msj.estado + '</span>');
+                    } else {
+                        $("#form-group-estado").removeClass('has-error');
+                        $("#form-msj-estado").html('');
+                    }
+
+                    if (typeof rst.msj.municipio !== 'undefined') {
+                        $("#form-group-municipio").addClass('has-error');
+                        $("#form-msj-municipio").html('<span class="text-danger">' + rst.msj.municipio + '</span>');
+                    } else {
+                        $("#form-group-municipio").removeClass('has-error');
+                        $("#form-msj-municipio").html('');
+                    }
+
+                    if (typeof rst.msj.parroquia !== 'undefined') {
+                        $("#form-group-parroquia").addClass('has-error');
+                        $("#form-msj-parroquia").html('<span class="text-danger">' + rst.msj.parroquia + '</span>');
+                    } else {
+                        $("#form-group-parroquia").removeClass('has-error');
+                        $("#form-msj-parroquia").html('');
+                    }
+
+                    if (typeof rst.msj.telefono_plantel !== 'undefined') {
+                        $("#form-group-telefono-plantel").addClass('has-error');
+                        $("#form-msj-telefono-plantel").html('<span class="text-danger">' + rst.msj.telefono_plantel + '</span>');
+                    } else {
+                        $("#form-group-telefono-plantel").removeClass('has-error');
+                        $("#form-msj-telefono-plantel").html('');
+                    }
+
+                    if (typeof rst.msj.email_plantel !== 'undefined') {
+                        $("#form-group-email-plantel").addClass('has-error');
+                        $("#form-msj-email-plantel").html('<span class="text-danger">' + rst.msj.email_plantel + '</span>');
+                    } else {
+                        $("#form-group-email-plantel").removeClass('has-error');
+                        $("#form-msj-email-plantel").html('');
+                    }
+                }
             }
         });
     });

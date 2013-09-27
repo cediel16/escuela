@@ -61,3 +61,12 @@ header .titulo{
 .paginado td:last-child .btn-group li{
     text-align: left;
 }
+
+.upper{
+    text-transform: uppercase;
+} 
+
+.lower{
+    text-transform: lowercase;
+} 
+

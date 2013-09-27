@@ -40,7 +40,13 @@ class Planteles extends CI_Controller {
             $respuesta = TRUE;
             $dea = trim(strtoupper($this->input->post('dea')));
             $rif = trim(strtoupper($this->input->post('rif')));
-            $nombre_pĺantel = trim(strtoupper($this->input->post('nombre_plantel')));
+            $nombre_plantel = trim(strtoupper($this->input->post('nombre_plantel')));
+            $direccion = trim(strtoupper($this->input->post('direccion')));
+            $estado = trim($this->input->post('estado'));
+            $municipio = trim($this->input->post('municipio'));
+            $parroquia = trim($this->input->post('parroquia'));
+            $telefono_plantel = trim($this->input->post('telefono_plantel'));
+            $email_plantel = trim($this->input->post('email_plantel'));
             $this->load->model('Planteles_model');
             $mensaje_principal = '';
             $msj = array();
@@ -61,15 +67,54 @@ class Planteles extends CI_Controller {
                 $msj['rif'] = 'Este campo es obligatorio';
             } elseif (!es_rif($rif)) {
                 $respuesta = FALSE;
-                $msj['rif'] = 'El RIF es inválido' . $rif;
+                $msj['rif'] = 'RIF es inválido';
             }
 
-            if ($nombre_pĺantel == '') {
+            if ($nombre_plantel == '') {
                 $respuesta = FALSE;
                 $msj['nombre_plantel'] = 'Este campo es obligatorio';
             } elseif (!es_nombre_plantel($rif)) {
                 $respuesta = FALSE;
-                $msj['nombre_plantel'] = 'El RIF es inválido' . $rif;
+                $msj['nombre_plantel'] = 'Nombre del plantel inválido. Asegurese de no usar caracteres especiales';
+            }
+
+            if ($direccion == '') {
+                $respuesta = FALSE;
+                $msj['direccion'] = 'Este campo es obligatorio';
+            } elseif (!es_direccion($rif)) {
+                $respuesta = FALSE;
+                $msj['direccion'] = 'Dirección del plantel inválida. Asegurese de no usar caracteres especiales';
+            }
+
+            if (!is_numeric($estado) || $estado == 0) {
+                $respuesta = FALSE;
+                $msj['estado'] = 'Este campo es obligatorio';
+            }
+
+            if (!is_numeric($municipio) || $municipio == 0) {
+                $respuesta = FALSE;
+                $msj['municipio'] = 'Este campo es obligatorio';
+            }
+
+            if (!is_numeric($parroquia) || $parroquia == 0) {
+                $respuesta = FALSE;
+                $msj['parroquia'] = 'Este campo es obligatorio';
+            }
+
+            if ($telefono_plantel == '') {
+                $respuesta = FALSE;
+                $msj['telefono_plantel'] = 'Este campo es obligatorio';
+            } elseif (!es_telefono($telefono_plantel)) {
+                $respuesta = FALSE;
+                $msj['telefono_plantel'] = 'Teléfono inválido';
+            }
+
+            if ($email_plantel == '') {
+                $respuesta = FALSE;
+                $msj['email_plantel'] = 'Este campo es obligatorio';
+            } elseif (!es_email($email_plantel)) {
+                $respuesta = FALSE;
+                $msj['email_plantel'] = 'Correo electrónico inválido';
             }
 
             /*

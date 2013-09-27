@@ -3,7 +3,8 @@ $dea = array(
     'type' => 'input',
     'id' => 'dea',
     'name' => 'dea',
-    'class' => 'form-control',
+    'class' => 'form-control upper',
+    'placeholder' => 'Ingrese un código DEA válido',
     'maxlength' => 10
 );
 
@@ -11,7 +12,8 @@ $rif = array(
     'type' => 'input',
     'id' => 'rif',
     'name' => 'rif',
-    'class' => 'form-control',
+    'class' => 'form-control upper',
+    'placeholder' => 'Ingrese un RIF válido',
     'maxlength' => 10
 );
 
@@ -19,13 +21,15 @@ $nombre_plantel = array(
     'type' => 'input',
     'id' => 'nombre_plantel',
     'name' => 'nombre_plantel',
-    'class' => 'form-control'
+    'placeholder' => 'Ingrese el nombre del plantel sin caracteres especiales',
+    'class' => 'form-control upper'
 );
 
 $direccion = array(
     'id' => 'direccion',
     'name' => 'direccion',
-    'class' => 'form-control',
+    'class' => 'form-control upper',
+    'placeholder' => 'Ingrese dirección sin Estado, Municiopio ni Parroquia',
     'rows' => 2
 );
 
@@ -33,7 +37,7 @@ $estado = array(
     'id' => 'estado',
     'name' => 'estado',
     'options' => $opt_estados,
-    'selected' => '',
+    'selected' => 0,
     'class' => "form-control"
 );
 
@@ -57,42 +61,51 @@ $telefono_plantel = array(
     'type' => 'input',
     'id' => 'telefono_plantel',
     'name' => 'telefono_plantel',
-    'class' => 'form-control'
+    'class' => 'form-control upper',
+    'placeholder' => 'Patrón: 0000-1234567',
+    'maxlength' => 12
 );
 
 $email_plantel = array(
     'type' => 'input',
     'id' => 'email_plantel',
     'name' => 'email_plantel',
-    'class' => 'form-control'
+    'placeholder' => 'Ingrese un correo electrónico válido',
+    'class' => 'form-control lower'
 );
 
 $cedula_director = array(
     'type' => 'input',
     'id' => 'cedula_director',
     'name' => 'cedula_director',
-    'class' => 'form-control'
+    'placeholder' => 'Patrón: V12345678',
+    'maxlength' => 9,
+    'class' => 'form-control upper'
 );
 
 $nombre_director = array(
     'type' => 'input',
     'id' => 'nombre_director',
     'name' => 'nombre_director',
-    'class' => 'form-control'
+    'placeholder' => 'Sin caracteres especiales',
+    'class' => 'form-control upper'
 );
 
 $telefono_director = array(
     'type' => 'input',
     'id' => 'telefono_director',
     'name' => 'telefono_director',
-    'class' => 'form-control'
+    'placeholder' => 'Patrón: 0000-1234567',
+    'maxlength' => 12,
+    'class' => 'form-control upper'
 );
 
 $email_director = array(
     'type' => 'input',
     'id' => 'email_director',
     'name' => 'email_director',
-    'class' => 'form-control'
+    'placeholder' => 'Ingrese un correo electrónico válido',
+    'class' => 'form-control lower'
 );
 
 $btnGuardarPlantel = array(
