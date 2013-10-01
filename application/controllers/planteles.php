@@ -165,7 +165,38 @@ class Planteles extends CI_Controller {
             }
 
             if ($respuesta) {
-                if ($this->Planteles_model->insertar(array())) {
+                $dea = trim(strtoupper($this->input->post('dea')));
+                $rif = trim(strtoupper($this->input->post('rif')));
+                $nombre_plantel = trim(strtoupper($this->input->post('nombre_plantel')));
+                $direccion = trim(strtoupper($this->input->post('direccion')));
+                $estado = trim($this->input->post('estado'));
+                $municipio = trim($this->input->post('municipio'));
+                $parroquia = trim($this->input->post('parroquia'));
+                $telefono_plantel = trim($this->input->post('telefono_plantel'));
+                $email_plantel = trim($this->input->post('email_plantel'));
+
+                $cedula_director = trim(strtoupper($this->input->post('cedula_director')));
+                $titulo_director = trim(strtoupper($this->input->post('titulo_director')));
+                $nombre_director = trim(strtoupper($this->input->post('nombre_director')));
+                $telefono_director = trim(strtoupper($this->input->post('telefono_director')));
+                $email_director = trim(strtoupper($this->input->post('email_director')));
+                $d = array(
+                    'dea' => $dea,
+                    'rif' => $rif,
+                    'nombre_plantel' => $nombre_plantel,
+                    'direccion' => $direccion,
+                    'estado' => $estado,
+                    'municipio' => $municipio,
+                    'parroquia' => $parroquia,
+                    'telefono_plantel' => $telefono_plantel,
+                    'email_plantel' => $email_plantel,
+                    'cedula_director' => $cedula_director,
+                    'titulo_director' => $titulo_director,
+                    'nombre_director' => $nombre_director,
+                    'telefono_director' => $telefono_director,
+                    'email_director' => $email_director
+                );
+                if ($this->Planteles_model->insertar($d)) {
                     $mensaje_principal = '<div class="alert alert-success">El plantel con el código DEA <strong>' . $dea . '</strong> se ha registrado con éxito.</div>';
                 } else {
                     $respuesta = FALSE;
@@ -316,8 +347,8 @@ class Planteles extends CI_Controller {
     }
 
     public function paginado() {
-        $this->load->model('Users_model');
-        echo json_encode($this->Users_model->paginado());
+        $this->load->model('Planteles_model');
+        echo json_encode($this->Planteles_model->paginado());
     }
 
 }

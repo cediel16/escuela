@@ -12,12 +12,6 @@ $(document).ready(function() {
                 "bSortable": true
             },
             {
-                "bSortable": true
-            },
-            {
-                "bSortable": true
-            },
-            {
                 "bSortable": false,
                 "bSearchable": false
             }

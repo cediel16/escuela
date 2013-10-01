@@ -52,13 +52,14 @@ class Planteles_model extends CI_Model {
                 telefono_director,
                 email_director
                 ) values(?,?,?,?,?,?,?,?,?,?,?,?)";
-        $this->db->query($qry, array($data['usuario'],
+        $this->db->query($qry, array(
             $data['dea'],
             $data['rif'],
-            $data['nombre'],
+            $data['nombre_plantel'],
             $data['direccion'],
-            $data['parroquia_fkey'],
+            $data['parroquia'],
             $data['telefono_plantel'],
+            $data['email_plantel'],
             $data['cedula_director'],
             $data['titulo_director'],
             $data['nombre_director'],
@@ -70,7 +71,7 @@ class Planteles_model extends CI_Model {
             return FALSE;
         }
         $this->db->trans_commit();
-        $this->aud->set_operation('usuarios', 'insertar', '{usuario:' . $data['usuario'] . ', email:' . $data['email'] . ', grupo_fkey:' . $data['grupo_fkey'] . ', rol_fkey:' . $data['rol_fkey'] . '}');
+        $this->aud->set_operation('planteles', 'insertar', json_encode($data));
         return TRUE;
     }
 
@@ -93,16 +94,7 @@ class Planteles_model extends CI_Model {
     }
 
     function paginado() {
-        $qry = "select a.id,
-            a.usuario, 
-            a.email, 
-            a.status,
-            b.rol,
-            c.grupo
-            from usuarios a 
-            inner join roles b on b.id=a.rol_fkey
-            inner join grupos c on c.id=a.grupo_fkey
-            order by a.usuario";
+        $qry = "select * from planteles order by dea";
         $rst = $this->db->query($qry);
         $f = Array();
         if ($rst->num_rows() > 0) {
@@ -110,18 +102,14 @@ class Planteles_model extends CI_Model {
                 $gear = '<div class = "btn-group">';
                 $gear.= '<span class = "btn btn-xs icon icon-gears dropdown-toggle" data-toggle = "dropdown"></span>';
                 $gear.= '<ul class = "dropdown-menu pull-right" role = "menu">';
-                $gear.= '<li>' . anchor('users/edit/' . $row->id, 'Editar') . '</li>';
+                $gear.= '<li>' . anchor('planteles/edit/' . $row->id, 'Editar') . '</li>';
                 $gear.= '<li class = "divider"></li>';
-                $gear.= '<li>' . anchor('users/del/' . $row->id, 'Activar') . '</li>';
-                $gear.= '<li>' . anchor('users/del/' . $row->id, 'Bloquear') . '</li>';
                 $gear.= '</ul>';
                 $gear.= '</div>';
                 $f[] = array(
-                    $row->usuario,
-                    $row->email,
-                    ucfirst($row->status),
-                    $row->grupo,
-                    $row->rol,
+                    $row->dea,
+                    $row->rif,
+                    $row->nombre,
                     $gear
                 );
             }

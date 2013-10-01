@@ -22,13 +22,13 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <table id="paginado" class="table table-condensed table-bordered" source="<?php echo site_url() ?>/users/paginado">
+                <table id="paginado" class="table table-condensed table-bordered" source="<?php echo site_url() ?>/planteles/paginado">
                     <thead>
                         <tr>
+                            <th class="col-md-2">Código DEA</th>
+                            <th class="col-md-2">RIF</th>
                             <th>Nombre</th>
-                            <th>Año escolar</th>
-                            <th>status</th>
-                            <th></th>
+                            <th class="col-md-1" style="width:1%;"></th>
                         </tr>
                     </thead>
                 </table>
@@ -38,4 +38,4 @@
 </div>
 <?php echo script_tag('assets/lib/datatables/js/jquery.datatables.js') ?>
 <?php echo script_tag('assets/lib/datatables/js/jquery.datatables.bootstrap.js') ?>
-<?php echo script_tag('assets/js/users/main.js') ?>
+<?php echo script_tag('assets/js/planteles/main.js') ?>

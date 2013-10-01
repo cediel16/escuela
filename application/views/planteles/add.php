@@ -234,7 +234,7 @@ $btnGuardarPlantel = array(
                             <div id="form-msj-cedula-director"></div>
                         </div>
                         <div class="form-group" id="form-group-titulo-director">
-                            <label for="<?php echo $titulo_director['id'] ?>" class="control-label">Nombre</label>
+                            <label for="<?php echo $titulo_director['id'] ?>" class="control-label">Título</label>
                             <?php echo form_input($titulo_director) ?>
                             <div id="form-msj-titulo-director"></div>
                         </div>
