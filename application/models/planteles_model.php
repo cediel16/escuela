@@ -129,8 +129,16 @@ class Planteles_model extends CI_Model {
         return $r;
     }
 
-    function obtener_usuario_por_id($id) {
-        $qry = "select * from usuarios where id=$id";
+    function obtener_plantel_por_id($id) {
+        $qry = "select a.*,
+            a.parroquia_fkey,
+            b.municipio_fkey,
+            c.estado_fkey
+            from planteles a 
+            inner join parroquias b on b.id=a.parroquia_fkey
+            inner join municipios c on c.id=b.municipio_fkey
+            inner join estados d on d.id=c.estado_fkey
+            and a.id=$id";
         $rst = $this->db->query($qry);
         if ($rst->num_rows() == 1) {
             return $rst->row_array();

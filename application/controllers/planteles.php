@@ -222,76 +222,187 @@ class Planteles extends CI_Controller {
     }
 
     public function edit() {
-        $this->load->model('Users_model');
+        $this->load->model('Planteles_model');
         if (!$this->input->post()) {
-            $data['titulo'] = 'Editar Usuario';
-            $data['opt_grupos'] = $this->Users_model->opt_grupos();
-            $data['opt_roles'] = $this->Users_model->opt_roles();
-            $data['data'] = $this->Users_model->obtener_usuario_por_id($this->uri->segment(3));
-            $this->tpl->view_basic('users/edit', $data);
+            $d = $this->Planteles_model->obtener_plantel_por_id($this->uri->segment(3));
+            if (!is_array($d)) {
+                redirect('errors/error_404');
+            }
+            /*
+
+              //$data['data'] = ;
+             */
+            $this->load->model('Estados_model');
+            $this->load->model('Municipios_model');
+            $this->load->model('Parroquias_model');
+            $data['titulo'] = 'Editar Plantel';
+            $data['opt_estados'] = $this->Estados_model->opt_estados();
+            $data['opt_municipios'] = $this->Municipios_model->opt_municipios($d['estado_fkey']);
+            $data['opt_parroquias'] = $this->Parroquias_model->opt_parroquias($d['municipio_fkey']);
+            $data['data'] = $d;
+            $this->tpl->view_basic('planteles/edit', $data);
         } else {
             $respuesta = TRUE;
-            $usuario_id = trim($this->input->post('usuario_id'));
-            $usuario = trim($this->input->post('usuario'));
-            $email = strtolower(trim($this->input->post('email')));
-            $clave = $this->input->post('clave');
-            $conf_clave = $this->input->post('conf_clave');
-//            $grupo = $this->input->post('grupo');
-            $rol = $this->input->post('rol');
-            $status = $this->input->post('status');
-            $this->load->model('Users_model');
+            $dea = trim(strtoupper($this->input->post('dea')));
+            $rif = trim(strtoupper($this->input->post('rif')));
+            $nombre_plantel = trim(strtoupper($this->input->post('nombre_plantel')));
+            $direccion = trim(strtoupper($this->input->post('direccion')));
+            $estado = trim($this->input->post('estado'));
+            $municipio = trim($this->input->post('municipio'));
+            $parroquia = trim($this->input->post('parroquia'));
+            $telefono_plantel = trim($this->input->post('telefono_plantel'));
+            $email_plantel = trim($this->input->post('email_plantel'));
+
+            $cedula_director = trim(strtoupper($this->input->post('cedula_director')));
+            $titulo_director = trim(strtoupper($this->input->post('titulo_director')));
+            $nombre_director = trim(strtoupper($this->input->post('nombre_director')));
+            $telefono_director = trim(strtoupper($this->input->post('telefono_director')));
+            $email_director = trim(strtoupper($this->input->post('email_director')));
+
+            $this->load->model('Planteles_model');
             $mensaje_principal = '';
             $msj = array();
-            if ($usuario == '') {
+
+            if ($dea == '') {
                 $respuesta = FALSE;
-                $msj['usuario'] = 'Este campo es obligatorio';
-            } elseif ($this->Users_model->existe_usuario_al_editar($usuario, $usuario_id)) {
+                $msj['dea'] = 'Este campo es obligatorio';
+            } elseif (!es_dea($dea)) {
                 $respuesta = FALSE;
-                $msj['usuario'] = 'El nombre del usuario ya se encuentra registrado';
+                $msj['dea'] = 'El código DEA es inválido';
+            } elseif ($this->Planteles_model->existe_dea($dea)) {
+                $respuesta = FALSE;
+                $msj['dea'] = 'El código DEA ya se en cuentra registrado';
             }
 
-            if ($email == '') {
+            if ($rif == '') {
                 $respuesta = FALSE;
-                $msj['email'] = 'Este campo es obligatorio';
-            } elseif (!es_email($email)) {
+                $msj['rif'] = 'Este campo es obligatorio';
+            } elseif (!es_rif($rif)) {
                 $respuesta = FALSE;
-                $msj['email'] = 'Correo electrónico inválido';
-            } elseif ($this->Users_model->existe_email_al_editar($email, $usuario_id)) {
-                $respuesta = FALSE;
-                $msj['email'] = 'El correo electrónico ya se encuentra en uso';
+                $msj['rif'] = 'RIF es inválido';
             }
 
-            if ($clave != $conf_clave) {
+            if ($nombre_plantel == '') {
                 $respuesta = FALSE;
-                $msj['clave'] = 'La contraseña y su confirmación no coiciden';
-            } elseif ($clave == $conf_clave && strlen($clave) <= 5 && $clave != '' && $conf_clave != '') {
+                $msj['nombre_plantel'] = 'Este campo es obligatorio';
+            } elseif (!es_nombre_plantel($rif)) {
                 $respuesta = FALSE;
-                $msj['clave'] = 'La contraseña debe tener mas de 5 caracteres';
+                $msj['nombre_plantel'] = 'Nombre del plantel inválido. Asegurese de no usar caracteres especiales';
             }
 
-
-//            if (!is_numeric($grupo)) {
-//                $respuesta = FALSE;
-//                $msj['grupo'] = 'Este campo es obligatorio';
-//            }
-
-            if (!is_numeric($rol)) {
+            if ($direccion == '') {
                 $respuesta = FALSE;
-                $msj['rol'] = 'Este campo es obligatorio';
+                $msj['direccion'] = 'Este campo es obligatorio';
+            } elseif (!es_direccion($rif)) {
+                $respuesta = FALSE;
+                $msj['direccion'] = 'Dirección del plantel inválida. Asegurese de no usar caracteres especiales';
+            }
+
+            if (!is_numeric($estado) || $estado == 0) {
+                $respuesta = FALSE;
+                $msj['estado'] = 'Este campo es obligatorio';
+            }
+
+            if (!is_numeric($municipio) || $municipio == 0) {
+                $respuesta = FALSE;
+                $msj['municipio'] = 'Este campo es obligatorio';
+            }
+
+            if (!is_numeric($parroquia) || $parroquia == 0) {
+                $respuesta = FALSE;
+                $msj['parroquia'] = 'Este campo es obligatorio';
+            }
+
+            if ($telefono_plantel == '') {
+                $respuesta = FALSE;
+                $msj['telefono_plantel'] = 'Este campo es obligatorio';
+            } elseif (!es_telefono($telefono_plantel)) {
+                $respuesta = FALSE;
+                $msj['telefono_plantel'] = 'Teléfono inválido';
+            }
+
+            if ($email_plantel == '') {
+                $respuesta = FALSE;
+                $msj['email_plantel'] = 'Este campo es obligatorio';
+            } elseif (!es_email($email_plantel)) {
+                $respuesta = FALSE;
+                $msj['email_plantel'] = 'Correo electrónico inválido';
+            }
+
+            if ($cedula_director == '') {
+                $respuesta = FALSE;
+                $msj['cedula_director'] = 'Este campo es obligatorio';
+            } elseif (!es_cedula($cedula_director)) {
+                $respuesta = FALSE;
+                $msj['cedula_director'] = 'Cédula inválida';
+            }
+
+            if ($titulo_director == '') {
+                $respuesta = FALSE;
+                $msj['titulo_director'] = 'Este campo es obligatorio';
+            } elseif (!es_nombre($titulo_director)) {
+                $respuesta = FALSE;
+                $msj['titulo_director'] = 'Título inválido';
+            }
+
+            if ($nombre_director == '') {
+                $respuesta = FALSE;
+                $msj['nombre_director'] = 'Este campo es obligatorio';
+            } elseif (!es_nombre($nombre_director)) {
+                $respuesta = FALSE;
+                $msj['nombre_director'] = 'Nombre inválido';
+            }
+
+            if ($telefono_director == '') {
+                $respuesta = FALSE;
+                $msj['telefono_director'] = 'Este campo es obligatorio';
+            } elseif (!es_telefono($telefono_director)) {
+                $respuesta = FALSE;
+                $msj['telefono_director'] = 'Teléfono inválido';
+            }
+
+            if ($email_director == '') {
+                $respuesta = FALSE;
+                $msj['email_director'] = 'Este campo es obligatorio';
+            } elseif (!es_email($email_director)) {
+                $respuesta = FALSE;
+                $msj['email_director'] = 'Correo electrónico inválido';
             }
 
             if ($respuesta) {
-                if ($this->Users_model->editar(array(
-                            'usuario_id' => $usuario_id,
-                            'usuario' => $usuario,
-                            'email' => $email,
-                            'clave' => md5($clave),
-//                            'grupo_fkey' => $grupo,
-                            'rol_fkey' => $rol,
-                            'status' => $status
-                        ))
-                ) {
-                    $mensaje_principal = '<div class="alert alert-success">El usuario se ha guardado con éxito.</div>';
+                $dea = trim(strtoupper($this->input->post('dea')));
+                $rif = trim(strtoupper($this->input->post('rif')));
+                $nombre_plantel = trim(strtoupper($this->input->post('nombre_plantel')));
+                $direccion = trim(strtoupper($this->input->post('direccion')));
+                $estado = trim($this->input->post('estado'));
+                $municipio = trim($this->input->post('municipio'));
+                $parroquia = trim($this->input->post('parroquia'));
+                $telefono_plantel = trim($this->input->post('telefono_plantel'));
+                $email_plantel = trim($this->input->post('email_plantel'));
+
+                $cedula_director = trim(strtoupper($this->input->post('cedula_director')));
+                $titulo_director = trim(strtoupper($this->input->post('titulo_director')));
+                $nombre_director = trim(strtoupper($this->input->post('nombre_director')));
+                $telefono_director = trim(strtoupper($this->input->post('telefono_director')));
+                $email_director = trim(strtoupper($this->input->post('email_director')));
+                $d = array(
+                    'dea' => $dea,
+                    'rif' => $rif,
+                    'nombre_plantel' => $nombre_plantel,
+                    'direccion' => $direccion,
+                    'estado' => $estado,
+                    'municipio' => $municipio,
+                    'parroquia' => $parroquia,
+                    'telefono_plantel' => $telefono_plantel,
+                    'email_plantel' => $email_plantel,
+                    'cedula_director' => $cedula_director,
+                    'titulo_director' => $titulo_director,
+                    'nombre_director' => $nombre_director,
+                    'telefono_director' => $telefono_director,
+                    'email_director' => $email_director
+                );
+                if ($this->Planteles_model->insertar($d)) {
+                    $mensaje_principal = '<div class="alert alert-success">El plantel con el código DEA <strong>' . $dea . '</strong> se ha registrado con éxito.</div>';
                 } else {
                     $respuesta = FALSE;
                 }
