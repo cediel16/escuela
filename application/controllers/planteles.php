@@ -47,6 +47,13 @@ class Planteles extends CI_Controller {
             $parroquia = trim($this->input->post('parroquia'));
             $telefono_plantel = trim($this->input->post('telefono_plantel'));
             $email_plantel = trim($this->input->post('email_plantel'));
+
+            $cedula_director = trim(strtoupper($this->input->post('cedula_director')));
+            $titulo_director = trim(strtoupper($this->input->post('titulo_director')));
+            $nombre_director = trim(strtoupper($this->input->post('nombre_director')));
+            $telefono_director = trim(strtoupper($this->input->post('telefono_director')));
+            $email_director = trim(strtoupper($this->input->post('email_director')));
+
             $this->load->model('Planteles_model');
             $mensaje_principal = '';
             $msj = array();
@@ -117,41 +124,45 @@ class Planteles extends CI_Controller {
                 $msj['email_plantel'] = 'Correo electrónico inválido';
             }
 
-            /*
+            if ($cedula_director == '') {
+                $respuesta = FALSE;
+                $msj['cedula_director'] = 'Este campo es obligatorio';
+            } elseif (!es_cedula($cedula_director)) {
+                $respuesta = FALSE;
+                $msj['cedula_director'] = 'Cédula inválida';
+            }
 
-              if ($email == '') {
-              $respuesta = FALSE;
-              $msj['email'] = 'Este campo es obligatorio';
-              } elseif (!es_email($email)) {
-              $respuesta = FALSE;
-              $msj['email'] = 'Correo electrónico inválido';
-              } elseif ($this->Users_model->existe_email($email)) {
-              $respuesta = FALSE;
-              $msj['email'] = 'El correo electrónico ya se encuentra en uso';
-              }
+            if ($titulo_director == '') {
+                $respuesta = FALSE;
+                $msj['titulo_director'] = 'Este campo es obligatorio';
+            } elseif (!es_nombre($titulo_director)) {
+                $respuesta = FALSE;
+                $msj['titulo_director'] = 'Título inválido';
+            }
 
-              if ($clave == '' || $conf_clave == '') {
-              $respuesta = FALSE;
-              $msj['clave'] = 'Ingrese contraseña y su confirmación';
-              } elseif ($clave != $conf_clave) {
-              $respuesta = FALSE;
-              $msj['clave'] = 'La contraseña y su confirmación no coiciden';
-              } elseif ($clave == $conf_clave && strlen($clave) <= 5) {
-              $respuesta = FALSE;
-              $msj['clave'] = 'La contraseña debe tener mas de 5 caracteres';
-              }
+            if ($nombre_director == '') {
+                $respuesta = FALSE;
+                $msj['nombre_director'] = 'Este campo es obligatorio';
+            } elseif (!es_nombre($nombre_director)) {
+                $respuesta = FALSE;
+                $msj['nombre_director'] = 'Nombre inválido';
+            }
 
-              if (!is_numeric($grupo)) {
-              $respuesta = FALSE;
-              $msj['grupo'] = 'Este campo es obligatorio';
-              }
+            if ($telefono_director == '') {
+                $respuesta = FALSE;
+                $msj['telefono_director'] = 'Este campo es obligatorio';
+            } elseif (!es_telefono($telefono_director)) {
+                $respuesta = FALSE;
+                $msj['telefono_director'] = 'Teléfono inválido';
+            }
 
-              if (!is_numeric($rol)) {
-              $respuesta = FALSE;
-              $msj['rol'] = 'Este campo es obligatorio';
-              }
-             * 
-             */
+            if ($email_director == '') {
+                $respuesta = FALSE;
+                $msj['email_director'] = 'Este campo es obligatorio';
+            } elseif (!es_email($email_director)) {
+                $respuesta = FALSE;
+                $msj['email_director'] = 'Correo electrónico inválido';
+            }
 
             if ($respuesta) {
                 if ($this->Planteles_model->insertar(array())) {

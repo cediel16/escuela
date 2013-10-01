@@ -83,6 +83,15 @@ $cedula_director = array(
     'class' => 'form-control upper'
 );
 
+
+$titulo_director = array(
+    'type' => 'input',
+    'id' => 'titulo_director',
+    'name' => 'titulo_director',
+    'placeholder' => 'Sin caracteres especiales',
+    'class' => 'form-control upper'
+);
+
 $nombre_director = array(
     'type' => 'input',
     'id' => 'nombre_director',
@@ -223,6 +232,11 @@ $btnGuardarPlantel = array(
                             <label for="<?php echo $cedula_director['id'] ?>" class="control-label">Cédula</label>
                             <?php echo form_input($cedula_director) ?>
                             <div id="form-msj-cedula-director"></div>
+                        </div>
+                        <div class="form-group" id="form-group-titulo-director">
+                            <label for="<?php echo $titulo_director['id'] ?>" class="control-label">Nombre</label>
+                            <?php echo form_input($titulo_director) ?>
+                            <div id="form-msj-titulo-director"></div>
                         </div>
                         <div class="form-group" id="form-group-nombre-director">
                             <label for="<?php echo $nombre_director['id'] ?>" class="control-label">Nombre</label>

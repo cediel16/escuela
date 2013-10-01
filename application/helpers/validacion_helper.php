@@ -11,7 +11,13 @@ if (!function_exists('is_cedula')) {
     }
 
     function es_nombre_plantel($arg) {
-        return 1;
+        return TRUE;
+        $patron = '/^[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*$/';
+        return preg_match($patron, $arg) == 1;
+    }
+
+    function es_nombre($arg) {
+        return TRUE;
         $patron = '/^[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)*$/';
         return preg_match($patron, $arg) == 1;
     }

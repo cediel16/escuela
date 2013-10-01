@@ -37,23 +37,40 @@ class Planteles_model extends CI_Model {
     }
 
     function insertar($data) {
-        /*
-          $this->db->trans_start();
-          $qry = "insert into usuarios(usuario,email,clave,grupo_fkey,rol_fkey,status) values(?,?,?,?,?,'activo')";
-          $this->db->query($qry, array($data['usuario'],
-          $data['email'],
-          $data['clave'],
-          $data['grupo_fkey'],
-          $data['rol_fkey']
-          ));
-          if ($this->db->trans_status() === FALSE) {
-          $this->db->trans_rollback();
-          return FALSE;
-          }
-          $this->db->trans_commit();
-          $this->aud->set_operation('usuarios', 'insertar', '{usuario:' . $data['usuario'] . ', email:' . $data['email'] . ', grupo_fkey:' . $data['grupo_fkey'] . ', rol_fkey:' . $data['rol_fkey'] . '}');
-         * 
-         */
+        $this->db->trans_start();
+        $qry = "insert into planteles(
+                dea,
+                rif,
+                nombre,
+                direccion,
+                parroquia_fkey,
+                telefono_plantel,
+                email_plantel,
+                cedula_director,
+                titulo_director,
+                nombre_director,
+                telefono_director,
+                email_director
+                ) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+        $this->db->query($qry, array($data['usuario'],
+            $data['dea'],
+            $data['rif'],
+            $data['nombre'],
+            $data['direccion'],
+            $data['parroquia_fkey'],
+            $data['telefono_plantel'],
+            $data['cedula_director'],
+            $data['titulo_director'],
+            $data['nombre_director'],
+            $data['telefono_director'],
+            $data['email_director']
+        ));
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return FALSE;
+        }
+        $this->db->trans_commit();
+        $this->aud->set_operation('usuarios', 'insertar', '{usuario:' . $data['usuario'] . ', email:' . $data['email'] . ', grupo_fkey:' . $data['grupo_fkey'] . ', rol_fkey:' . $data['rol_fkey'] . '}');
         return TRUE;
     }
 

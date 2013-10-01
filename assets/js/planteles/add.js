@@ -93,28 +93,26 @@ $(document).ready(function() {
                     $("#form-msj-email-plantel").html('');
                     $("#email_plantel").val('');
 
+                    $("#form-group-cedula-director").removeClass('has-error');
+                    $("#form-msj-cedula-director").html('');
+                    $("#cedula_director").val('');
 
+                    $("#form-group-titulo-director").removeClass('has-error');
+                    $("#form-msj-titulo-director").html('');
+                    $("#titulo_director").val('');
 
-                    //
+                    $("#form-group-nombre-director").removeClass('has-error');
+                    $("#form-msj-nombre-director").html('');
+                    $("#nombre_director").val('');
 
-//                    $("#form-group-email").removeClass('has-error');
-//                    $("#form-msj-email").html('');
-//                    $("#email").val('');
-//
-//                    $("#form-group-clave").removeClass('has-error');
-//                    $("#form-msj-clave").html('');
-//                    $("#form-group-conf-clave").removeClass('has-error');
-//                    $("#clave").val('');
-//                    $("#conf_clave").val('');
-//
-//                    $("#form-group-grupo").removeClass('has-error');
-//                    $("#form-msj-grupo").html('');
-//                    $("#grupo").val('');
-//
-//                    $("#form-group-rol").removeClass('has-error');
-//                    $("#form-msj-rol").html('');
-//                    $("#rol").val('');
-//
+                    $("#form-group-telefono-director").removeClass('has-error');
+                    $("#form-msj-telefono-director").html('');
+                    $("#telefono_director").val('');
+
+                    $("#form-group-email-director").removeClass('has-error');
+                    $("#form-msj-email-director").html('');
+                    $("#email_director").val('');
+
                     $("#mensaje-principal").html(rst.mensaje_principal);
                 } else {
                     if (typeof rst.msj.dea !== 'undefined') {
@@ -184,6 +182,46 @@ $(document).ready(function() {
                     } else {
                         $("#form-group-email-plantel").removeClass('has-error');
                         $("#form-msj-email-plantel").html('');
+                    }
+
+                    if (typeof rst.msj.cedula_director !== 'undefined') {
+                        $("#form-group-cedula-director").addClass('has-error');
+                        $("#form-msj-cedula-director").html('<span class="text-danger">' + rst.msj.cedula_director + '</span>');
+                    } else {
+                        $("#form-group-cedula-director").removeClass('has-error');
+                        $("#form-msj-cedula-director").html('');
+                    }
+
+                    if (typeof rst.msj.titulo_director !== 'undefined') {
+                        $("#form-group-titulo-director").addClass('has-error');
+                        $("#form-msj-titulo-director").html('<span class="text-danger">' + rst.msj.titulo_director + '</span>');
+                    } else {
+                        $("#form-group-titulo-director").removeClass('has-error');
+                        $("#form-msj-titulo-director").html('');
+                    }
+                    
+                    if (typeof rst.msj.nombre_director !== 'undefined') {
+                        $("#form-group-nombre-director").addClass('has-error');
+                        $("#form-msj-nombre-director").html('<span class="text-danger">' + rst.msj.nombre_director + '</span>');
+                    } else {
+                        $("#form-group-nombre-director").removeClass('has-error');
+                        $("#form-msj-nombre-director").html('');
+                    }
+
+                    if (typeof rst.msj.telefono_director !== 'undefined') {
+                        $("#form-group-telefono-director").addClass('has-error');
+                        $("#form-msj-telefono-director").html('<span class="text-danger">' + rst.msj.telefono_director + '</span>');
+                    } else {
+                        $("#form-group-telefono-director").removeClass('has-error');
+                        $("#form-msj-telefono-director").html('');
+                    }
+
+                    if (typeof rst.msj.email_director !== 'undefined') {
+                        $("#form-group-email-director").addClass('has-error');
+                        $("#form-msj-email-director").html('<span class="text-danger">' + rst.msj.email_director + '</span>');
+                    } else {
+                        $("#form-group-email-director").removeClass('has-error');
+                        $("#form-msj-email-director").html('');
                     }
                 }
             }
