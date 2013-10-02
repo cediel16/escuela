@@ -12,9 +12,9 @@ class Planteles_model extends CI_Model {
         return !$rst->num_rows() == 0;
     }
 
-    function existe_usuario_al_editar($dato, $usuario_id) {
-        $qry = "select 1 from usuarios where usuario = ? and id<>?";
-        $rst = $this->db->query($qry, array($dato, $usuario_id));
+    function existe_dea_al_editar($dato, $plantel_id) {
+        $qry = "select 1 from planteles where dea = ? and id<>?";
+        $rst = $this->db->query($qry, array($dato, $plantel_id));
         return !$rst->num_rows() == 0;
     }
 
@@ -77,24 +77,55 @@ class Planteles_model extends CI_Model {
 
     function editar($data) {
         $this->db->trans_start();
-        $qry = "update usuarios set usuario=?, email=?, status=?, rol_fkey=? where id=?";
-        $this->db->query($qry, array($data['usuario'],
-            $data['email'],
-            $data['status'],
-            $data['rol_fkey'],
-            $data['usuario_id']
+        $qry = "update planteles set
+            dea=?,
+            rif=?,
+            nombre=?,
+            direccion=?,
+            parroquia_fkey=?,
+            telefono_plantel=?,
+            email_plantel=?,
+            cedula_director=?,
+            titulo_director=?,
+            nombre_director=?,
+            telefono_director=?,
+            email_director=?
+            where id=?";
+        $this->db->query($qry, array(
+            $data['dea'],
+            $data['rif'],
+            $data['nombre_plantel'],
+            $data['direccion'],
+            $data['parroquia'],
+            $data['telefono_plantel'],
+            $data['email_plantel'],
+            $data['cedula_director'],
+            $data['titulo_director'],
+            $data['nombre_director'],
+            $data['telefono_director'],
+            $data['email_director'],
+            $data['plantel_id'],
         ));
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
             return FALSE;
         }
         $this->db->trans_commit();
-        $this->aud->set_operation('usuarios', 'editar', '{id:' . $data['usuario_id'] . ',usuario:' . $data['usuario'] . ',email:' . $data['email'] . ',status:' . $data['status'] . ', rol_fkey:' . $data['rol_fkey'] . '}');
+        $this->aud->set_operation('planteles', 'editar', json_encode($data));
         return TRUE;
     }
 
     function paginado() {
-        $qry = "select * from planteles order by dea";
+        $qry = "select a.id,
+            a.dea,
+            a.rif,
+            a.nombre,
+            a.direccion || ' PARROQUIA ' || b.parroquia || ' MUNICIPIO ' || c.municipio || ' ESTADO ' || d.estado as direccion
+            from planteles a
+            inner join parroquias b on b.id=a.parroquia_fkey
+            inner join municipios c on c.id=b.municipio_fkey
+            inner join estados d on d.id=c.estado_fkey
+            order by a.id";
         $rst = $this->db->query($qry);
         $f = Array();
         if ($rst->num_rows() > 0) {
@@ -107,9 +138,11 @@ class Planteles_model extends CI_Model {
                 $gear.= '</ul>';
                 $gear.= '</div>';
                 $f[] = array(
+                    $row->id,
                     $row->dea,
                     $row->rif,
                     $row->nombre,
+                    $row->direccion,
                     $gear
                 );
             }
@@ -130,7 +163,8 @@ class Planteles_model extends CI_Model {
     }
 
     function obtener_plantel_por_id($id) {
-        $qry = "select a.*,
+        if (ctype_digit($id)) {
+            $qry = "select a.*,
             a.parroquia_fkey,
             b.municipio_fkey,
             c.estado_fkey
@@ -139,9 +173,10 @@ class Planteles_model extends CI_Model {
             inner join municipios c on c.id=b.municipio_fkey
             inner join estados d on d.id=c.estado_fkey
             and a.id=$id";
-        $rst = $this->db->query($qry);
-        if ($rst->num_rows() == 1) {
-            return $rst->row_array();
+            $rst = $this->db->query($qry);
+            if ($rst->num_rows() == 1) {
+                return $rst->row_array();
+            }
         }
         return NULL;
     }

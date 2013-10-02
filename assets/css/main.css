@@ -68,5 +68,9 @@ header .titulo{
 
 .lower{
     text-transform: lowercase;
-} 
+}
+
+#img-loading{
+    display:none;
+}
 

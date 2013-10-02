@@ -5,24 +5,8 @@ if (!defined('BASEPATH'))
 
 class Planteles extends CI_Controller {
 
-    /**
-     * Index Page for this controller.
-     *
-     * Maps to the following URL
-     * 		http://example.com/index.php/welcome
-     * 	- or -  
-     * 		http://example.com/index.php/welcome/index
-     * 	- or -
-     * Since this controller is set as the default controller in 
-     * config/routes.php, it's displayed at http://example.com/
-     *
-     * So any other public methods not prefixed with an underscore will
-     * map to /index.php/welcome/<method_name>
-     * @see http://codeigniter.com/user_guide/general/urls.html
-     */
     public function __construct() {
         parent::__construct();
-//$this->output->enable_profiler(TRUE);
     }
 
     public function add() {
@@ -64,9 +48,6 @@ class Planteles extends CI_Controller {
             } elseif (!es_dea($dea)) {
                 $respuesta = FALSE;
                 $msj['dea'] = 'El código DEA es inválido';
-            } elseif ($this->Planteles_model->existe_dea($dea)) {
-                $respuesta = FALSE;
-                $msj['dea'] = 'El código DEA ya se en cuentra registrado';
             }
 
             if ($rif == '') {
@@ -197,7 +178,7 @@ class Planteles extends CI_Controller {
                     'email_director' => $email_director
                 );
                 if ($this->Planteles_model->insertar($d)) {
-                    $mensaje_principal = '<div class="alert alert-success">El plantel con el código DEA <strong>' . $dea . '</strong> se ha registrado con éxito.</div>';
+                    $mensaje_principal = '<div class="alert alert-success">El nuevo plantel se ha registrado con éxito.</div>';
                 } else {
                     $respuesta = FALSE;
                 }
@@ -228,10 +209,6 @@ class Planteles extends CI_Controller {
             if (!is_array($d)) {
                 redirect('errors/error_404');
             }
-            /*
-
-              //$data['data'] = ;
-             */
             $this->load->model('Estados_model');
             $this->load->model('Municipios_model');
             $this->load->model('Parroquias_model');
@@ -243,6 +220,7 @@ class Planteles extends CI_Controller {
             $this->tpl->view_basic('planteles/edit', $data);
         } else {
             $respuesta = TRUE;
+            $plantel_id = trim($this->input->post('plantel_id'));
             $dea = trim(strtoupper($this->input->post('dea')));
             $rif = trim(strtoupper($this->input->post('rif')));
             $nombre_plantel = trim(strtoupper($this->input->post('nombre_plantel')));
@@ -251,13 +229,13 @@ class Planteles extends CI_Controller {
             $municipio = trim($this->input->post('municipio'));
             $parroquia = trim($this->input->post('parroquia'));
             $telefono_plantel = trim($this->input->post('telefono_plantel'));
-            $email_plantel = trim($this->input->post('email_plantel'));
+            $email_plantel = trim(strtolower($this->input->post('email_plantel')));
 
             $cedula_director = trim(strtoupper($this->input->post('cedula_director')));
             $titulo_director = trim(strtoupper($this->input->post('titulo_director')));
             $nombre_director = trim(strtoupper($this->input->post('nombre_director')));
             $telefono_director = trim(strtoupper($this->input->post('telefono_director')));
-            $email_director = trim(strtoupper($this->input->post('email_director')));
+            $email_director = trim(strtolower($this->input->post('email_director')));
 
             $this->load->model('Planteles_model');
             $mensaje_principal = '';
@@ -269,9 +247,6 @@ class Planteles extends CI_Controller {
             } elseif (!es_dea($dea)) {
                 $respuesta = FALSE;
                 $msj['dea'] = 'El código DEA es inválido';
-            } elseif ($this->Planteles_model->existe_dea($dea)) {
-                $respuesta = FALSE;
-                $msj['dea'] = 'El código DEA ya se en cuentra registrado';
             }
 
             if ($rif == '') {
@@ -386,6 +361,7 @@ class Planteles extends CI_Controller {
                 $telefono_director = trim(strtoupper($this->input->post('telefono_director')));
                 $email_director = trim(strtoupper($this->input->post('email_director')));
                 $d = array(
+                    'plantel_id' => $plantel_id,
                     'dea' => $dea,
                     'rif' => $rif,
                     'nombre_plantel' => $nombre_plantel,
@@ -401,8 +377,8 @@ class Planteles extends CI_Controller {
                     'telefono_director' => $telefono_director,
                     'email_director' => $email_director
                 );
-                if ($this->Planteles_model->insertar($d)) {
-                    $mensaje_principal = '<div class="alert alert-success">El plantel con el código DEA <strong>' . $dea . '</strong> se ha registrado con éxito.</div>';
+                if ($this->Planteles_model->editar($d)) {
+                    $mensaje_principal = '<div class="alert alert-success">Los datos del plantel se han guardado con éxito.</div>';
                 } else {
                     $respuesta = FALSE;
                 }

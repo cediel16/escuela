@@ -137,6 +137,9 @@ $btnGuardarPlantel = array(
                 <div class="btn-group">
                     <?php echo anchor_popup('ayuda/view/users/add', '<span class="text-success"><span class="icon icon-question-sign"></span></span> Ayuda', array('class' => 'btn btn-default btn-sm')) ?>
                 </div>
+                <div class="btn-group" id="img-loading">
+                    <?php echo img(array('src' => 'assets/img/loading.gif', 'alt' => 'Procesando...', 'title' => 'Procesando...')); ?>
+                </div>
             </div>
         </div>
     </div>

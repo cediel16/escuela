@@ -1,4 +1,10 @@
 <?php
+$id = array(
+    'name' => 'plantel_id',
+    'id' => 'plantel_id',
+    'value' => $data['id']
+);
+
 $dea = array(
     'type' => 'input',
     'id' => 'dea',
@@ -146,7 +152,10 @@ $btnGuardarPlantel = array(
                     <?php echo anchor('planteles', '<span class="text-danger"><span class="icon icon-remove-sign"></span></span> Cancelar', 'class="btn btn-default btn-sm"') ?>
                 </div>
                 <div class="btn-group">
-                    <?php echo anchor_popup('ayuda/view/users/add', '<span class="text-success"><span class="icon icon-question-sign"></span></span> Ayuda', array('class' => 'btn btn-default btn-sm')) ?>
+                    <?php echo anchor_popup('ayuda/view/users/edit', '<span class="text-success"><span class="icon icon-question-sign"></span></span> Ayuda', array('class' => 'btn btn-default btn-sm')) ?>
+                </div>
+                <div class="btn-group" id="img-loading">
+                    <?php echo img(array('src' => 'assets/img/loading.gif', 'alt' => 'Procesando...', 'title' => 'Procesando...')); ?>
                 </div>
             </div>
         </div>
@@ -158,6 +167,7 @@ $btnGuardarPlantel = array(
             <div class="col-md-12" id="mensaje-principal"></div>
         </div>
         <?php echo form_open('', array('id' => 'frmPlantel', 'role' => 'form')) ?>
+        <input type="hidden" id="<?php echo $id['id'] ?>" name="<?php echo $id['name'] ?>" value="<?php echo $id['value'] ?>" />
         <div class="row">
             <div class="col-md-9">
                 <legend>Datos del Plantel</legend>
@@ -271,4 +281,4 @@ $btnGuardarPlantel = array(
         <?php echo form_close() ?>
     </div>
 </div>
-<?php echo script_tag('assets/js/planteles/add.js') ?>
+<?php echo script_tag('assets/js/planteles/edit.js') ?>

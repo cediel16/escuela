@@ -25,10 +25,12 @@
                 <table id="paginado" class="table table-condensed table-bordered" source="<?php echo site_url() ?>/planteles/paginado">
                     <thead>
                         <tr>
-                            <th class="col-md-2">Código DEA</th>
-                            <th class="col-md-2">RIF</th>
+                            <th style="width:1%;">Id</th>
+                            <th style="width:1%;">Código DEA</th>
+                            <th style="width:1%;">RIF</th>
                             <th>Nombre</th>
-                            <th class="col-md-1" style="width:1%;"></th>
+                            <th>Dirección</th>
+                            <th style="width:1%;"></th>
                         </tr>
                     </thead>
                 </table>

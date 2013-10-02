@@ -55,7 +55,16 @@ $(document).ready(function() {
             type: 'post',
             dataType: 'json',
             data: $("#frmPlantel").serialize(),
+            error: function(xhr, textStatus, errorThrown) {
+                $("#img-loading").css('display', 'none');
+                $("#mensaje-principal").html('<div class="alert alert-danger"><strong>' + textStatus.toUpperCase() + ' ' + xhr.status + ':</strong> ' + errorThrown + '</div>');
+            },
+            beforeSend: function() {
+                $("#mensaje-principal").html('');
+                $("#img-loading").css('display', 'inline');
+            },
             success: function(rst) {
+                $("#img-loading").css('display', 'none');
                 if (rst.respuesta === true) {
                     $("#form-group-dea").removeClass('has-error');
                     $("#form-msj-dea").html('');
@@ -199,7 +208,7 @@ $(document).ready(function() {
                         $("#form-group-titulo-director").removeClass('has-error');
                         $("#form-msj-titulo-director").html('');
                     }
-                    
+
                     if (typeof rst.msj.nombre_director !== 'undefined') {
                         $("#form-group-nombre-director").addClass('has-error');
                         $("#form-msj-nombre-director").html('<span class="text-danger">' + rst.msj.nombre_director + '</span>');
