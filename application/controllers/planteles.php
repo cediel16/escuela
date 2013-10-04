@@ -438,6 +438,31 @@ class Planteles extends CI_Controller {
         echo json_encode($this->Planteles_model->paginado());
     }
 
+    public function uplogo() {
+        $this->config->load('upload');
+        $config = $this->config->item('logo');
+        $config['file_name'] = 'logo-' . time();
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('logo')) {
+            echo $this->upload->display_errors();
+        } else {
+            $img_data = $this->upload->data();
+            $this->load->library('image_lib');
+            $config_img = array(
+                'image_library' => 'gd2',
+                'source_image' => $config['upload_path'] . $img_data['orig_name'],
+                'create_thumb' => FALSE,
+                'maintain_ratio' => FALSE,
+                'width' => 160,
+                'height' => 160
+            );
+            $this->image_lib->initialize($config_img);
+            $this->image_lib->resize();
+            echo script_tag('assets/js/jquery-1.10.2.js');
+            echo '<script type="text/javascript">$("#logo-plantel", window.parent.document).html("<h1>clicked</h1>")</script>';
+        }
+    }
+
 }
 
 /* End of file welcome.php */

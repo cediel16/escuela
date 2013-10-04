@@ -23,7 +23,6 @@ $(document).ready(function() {
             }
         });
     });
-
     $("#municipio").change(function() {
         $.ajax({
             url: 'ajax',
@@ -47,8 +46,6 @@ $(document).ready(function() {
             }
         });
     });
-
-
     $("#btnGuardarPlantel").click(function() {
         $.ajax({
             url: $("#frmPlantel").attr('action'),
@@ -69,59 +66,45 @@ $(document).ready(function() {
                     $("#form-group-dea").removeClass('has-error');
                     $("#form-msj-dea").html('');
                     $("#dea").val('');
-
                     $("#form-group-rif").removeClass('has-error');
                     $("#form-msj-rif").html('');
                     $("#rif").val('');
-
                     $("#form-group-nombre-plantel").removeClass('has-error');
                     $("#form-msj-nombre-plantel").html('');
                     $("#nombre_plantel").val('');
-
                     $("#form-group-direccion").removeClass('has-error');
                     $("#form-msj-direccion").html('');
                     $("#direccion").val('');
-
                     $("#form-group-estado").removeClass('has-error');
                     $("#form-msj-estado").html('');
                     $("#estado").val('');
-
                     $("#form-group-municipio").removeClass('has-error');
                     $("#form-msj-municipio").html('');
                     $("#municipio").val('');
-
                     $("#form-group-parroquia").removeClass('has-error');
                     $("#form-msj-parroquia").html('');
                     $("#parroquia").val('');
-
                     $("#form-group-telefono-plantel").removeClass('has-error');
                     $("#form-msj-telefono-plantel").html('');
                     $("#telefono_plantel").val('');
-
                     $("#form-group-email-plantel").removeClass('has-error');
                     $("#form-msj-email-plantel").html('');
                     $("#email_plantel").val('');
-
                     $("#form-group-cedula-director").removeClass('has-error');
                     $("#form-msj-cedula-director").html('');
                     $("#cedula_director").val('');
-
                     $("#form-group-titulo-director").removeClass('has-error');
                     $("#form-msj-titulo-director").html('');
                     $("#titulo_director").val('');
-
                     $("#form-group-nombre-director").removeClass('has-error');
                     $("#form-msj-nombre-director").html('');
                     $("#nombre_director").val('');
-
                     $("#form-group-telefono-director").removeClass('has-error');
                     $("#form-msj-telefono-director").html('');
                     $("#telefono_director").val('');
-
                     $("#form-group-email-director").removeClass('has-error');
                     $("#form-msj-email-director").html('');
                     $("#email_director").val('');
-
                     $("#mensaje-principal").html(rst.mensaje_principal);
                 } else {
                     if (typeof rst.msj.dea !== 'undefined') {
@@ -235,5 +218,30 @@ $(document).ready(function() {
                 }
             }
         });
+    });
+    $("#logo").change(function() {
+        $("#frmLogo").submit();
+        /*
+         $.ajax({
+         url: $("#frmLogo").attr('action'),
+         secureuri: false,
+         fileElementId: 'logo',
+         type: 'post',
+         dataType: 'json',
+         data: $("#frmLogo").serialize(),
+         error: function(xhr, textStatus, errorThrown) {
+         $("#img-loading").css('display', 'none');
+         $("#mensaje-imagen").html('<div class="alert alert-danger"><strong>' + textStatus.toUpperCase() + ' ' + xhr.status + ':</strong> ' + errorThrown + '</div>');
+         },
+         beforeSend: function() {
+         $("#mensaje-imagen").html('<div class="alert alert-info">Cargando logo...</div>');
+         $("#img-loading").css('display', 'inline');
+         },
+         success: function(rst) {
+         $("#mensaje-imagen").html('');
+         $("#img-loading").css('display', 'none');
+         }
+         });
+         */
     });
 }); 

@@ -1,4 +1,11 @@
 <?php
+$logo = array(
+    'type' => 'file',
+    'id' => 'logo',
+    'name' => 'logo',
+    'title' => 'Haz clic para cambiar el logo'
+);
+
 $dea = array(
     'type' => 'input',
     'id' => 'dea',
@@ -148,10 +155,28 @@ $btnGuardarPlantel = array(
     <div class="container">
         <div class="row">
             <div class="col-md-12" id="mensaje-principal"></div>
+            <iframe id="frame_upload" name="frame_upload" ></iframe>
         </div>
-        <?php echo form_open('', array('id' => 'frmPlantel', 'role' => 'form')) ?>
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-2">
+                <legend>Escudo</legend>
+                <div class="row">
+                    <?php echo form_open('planteles/uplogo', array('id' => 'frmLogo', 'role' => 'form', 'enctype' => 'multipart/form-data', 'target' => 'frame_upload')) ?>
+                    <div class="col-md-12">
+                        <div class="logo-plantel-wrapper">
+                            <div id="logo-plantel">
+                                <?php echo img(array('src' => 'assets/img/logo_plantel.png', 'alt' => 'Logo del plantel', 'title' => 'Haz clic para cambiar el logo', 'class' => 'logo-plantel')) ?>
+                            </div>
+                            <input type="text" id="ok1" name="ok1" value="ok1"/>
+                            <?php echo form_upload($logo) ?>
+                            <div id="mensaje-logo"></div>
+                        </div>
+                    </div>
+                    <?php echo form_close() ?>
+                </div>
+            </div>
+            <?php echo form_open('', array('id' => 'frmPlantel', 'role' => 'form')) ?>
+            <div class="col-md-7">
                 <legend>Datos del Plantel</legend>
                 <div class="row">
                     <div class="col-md-12">
@@ -259,8 +284,8 @@ $btnGuardarPlantel = array(
                     </div>
                 </div>
             </div>
+            <?php echo form_close() ?>
         </div>
-        <?php echo form_close() ?>
     </div>
 </div>
 <?php echo script_tag('assets/js/planteles/add.js') ?>

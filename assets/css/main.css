@@ -74,3 +74,26 @@ header .titulo{
     display:none;
 }
 
+.logo-plantel{
+    width: 100%;
+    height:160px;
+}
+
+.logo-plantel-wrapper{
+    cursor: pointer;
+    position:relative;
+}
+
+.logo-plantel-wrapper input[type=file]{
+    border:1px solid red;
+    width:100%;
+    height:160px;
+    float:left;
+    position:absolute;
+    top:0;
+    opacity: 0;
+    z-index:100;
+    cursor:pointer;
+}
+
+
